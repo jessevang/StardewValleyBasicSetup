@@ -1,0 +1,12 @@
+{
+  "Name": "StardewValleyBasicSetup",
+  "Author": "AuthorName",
+  "Version": "1.0.0",
+  "Description": "<One or two sentences about the mod>",
+  "UniqueID": "AuthorName.StardewValleyBasicSetup",
+  "EntryDll": "StardewValleyBasicSetup.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": [ "Nexus:000001" ] //replace this text and 000001 with your nexus mode ID
+}
+
+
