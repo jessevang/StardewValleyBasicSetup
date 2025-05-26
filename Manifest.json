@@ -6,7 +6,13 @@
   "UniqueID": "AuthorName.StardewValleyBasicSetup",
   "EntryDll": "StardewValleyBasicSetup.dll",
   "MinimumApiVersion": "4.0.0",
-  "UpdateKeys": [ "Nexus:000001" ] //replace this text and 000001 with your nexus mode ID
+  "UpdateKeys": [], 
+  "Dependencies": [
+    {
+      "UniqueID": "spacechase0.GenericModConfigMenu",
+      "IsRequired": false
+    }
+  ]
 }
 
 

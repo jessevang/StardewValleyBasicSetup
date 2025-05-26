@@ -1,69 +1,54 @@
-﻿using HarmonyLib;
-using Spacechase.Shared.Patching;
+﻿using GenericModConfigMenu;
 using StardewModdingAPI;
-using StardewValley;
+using StardewModdingAPI.Events;
 
 namespace StardewValleyBasicSetup
 {
-    public class Config
+    public partial class ModConfig
     {
         public int Somevalues { get; set; } = 5;
         public bool SomeOtherValues { get; set; } = false;
-
     }
 
-    internal sealed class ModEntry : Mod
+    public partial class ModEntry : Mod
     {
         public static ModEntry Instance { get; private set; }
-        public Config Config { get; private set; }
+        public ModConfig Config { get; set; }
 
-        
         public override void Entry(IModHelper helper)
         {
-            Instance = this; 
-            Config = helper.ReadConfig<Config>() ?? new Config(); // Sample to call --> int somevalue = Instance.Config.Somevalues; 
+            Instance = this;
+            Config = helper.ReadConfig<ModConfig>() ?? new ModConfig();
 
-            //Sample to Apply a Patch from patches folder. Used this if you want to use a replace an existing stardew valley function some other other code.
-            HarmonyPatcher.Apply(this,
-            new PatchName(Config, Instance)
+            helper.Events.GameLoop.GameLaunched += OnGameLaunched;
+        }
+
+        private void OnGameLaunched(object sender, StardewModdingAPI.Events.GameLaunchedEventArgs e)
+        {
+            generateGMCM();
+        }
+
+        private void generateGMCM()
+        {
+            var gmcm = Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
+            if (gmcm == null)
+                return;
+
+            gmcm.Register(
+                mod: ModManifest,
+                reset: () => Config = new ModConfig(),
+                save: () => Helper.WriteConfig(Config)
             );
 
-            //use helper events examples that can be leveraged or removed.
-            helper.Events.GameLoop.DayStarted += GameLoop_DayStarted; 
-            helper.Events.GameLoop.DayEnding += GameLoop_DayEnding; 
-            helper.Events.Input.ButtonPressed += Input_ButtonPressed; 
-        }
+            gmcm.AddSectionTitle(ModManifest, () => "Sample Title");
 
 
-        // Save config method for later use
-        public void SaveConfig()
-        {
-            Helper.WriteConfig(Config);
-        }
-
-        private void GameLoop_DayEnding(object? sender, StardewModdingAPI.Events.DayEndingEventArgs e)
-        {
-            // ignore if player hasn't loaded a save yet
-            if (!Context.IsWorldReady)
-                return;
-            
 
         }
 
-        private void Input_ButtonPressed(object? sender, StardewModdingAPI.Events.ButtonPressedEventArgs e)
-        {
-            // ignore if player hasn't loaded a save yet
-            if (!Context.IsWorldReady)
-                return;
-            ;
-        }
-
-        private void GameLoop_DayStarted(object? sender, StardewModdingAPI.Events.DayStartedEventArgs e)
-        {
-            // ignore if player hasn't loaded a save yet
-            if (!Context.IsWorldReady)
-                return;
-
-        }
     }
+
+
+
+
 }
