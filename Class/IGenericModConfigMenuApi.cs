@@ -1,6 +1,6 @@
 ﻿// This interface is part of the Generic Mod Config Menu (GMCM) API.
 // Source: https://github.com/spacechase0/StardewValleyMods/tree/develop/GenericModConfigMenu
-//NexusMod: https://www.nexusmods.com/stardewvalley/mods/5098
+// NexusMod: https://www.nexusmods.com/stardewvalley/mods/5098
 // Author: spacechase0 (https://next.nexusmods.com/profile/spacechase0?gameId=1303)
 // License: MIT (https://opensource.org/licenses/MIT)
 //
